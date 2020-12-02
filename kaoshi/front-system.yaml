@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kaoshi
+  name: front-system
+  labels:
+    app: front-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front-system
+  template:
+    metadata:
+      labels:
+        app: front-system
+    spec:
+      containers:
+      - name: front-system
+        image: registry.cn-hangzhou.aliyuncs.com/xiaodong_li/exam-system
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kaoshi
+  name: front-system-svc
+spec:
+  ports:
+   - port: 80
+     targetPort: 80
+  selector:
+   app: front-system
